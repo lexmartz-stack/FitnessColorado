@@ -1,0 +1,682 @@
+<!DOCTYPE html> 
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>2026 Colorado Superbody Championships</title>
+<style>
+
+:root{
+    --bg:#050130;
+    --panel:rgba(14,20,40,0.75);
+    --card:rgba(18,26,51,0.65);
+    --text:#ffffff;
+    --muted:rgba(255,255,255,0.7);
+    --border:rgba(255,255,255,0.12);
+    --gold:#d4af37;
+    --red:#ff1c2f;
+
+    --radius:16px;
+    --blur:14px;
+}
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html, body{
+    width:100%;
+    overflow-x:hidden;
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.4;
+}
+
+/* HERO */
+.hero{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.hero img{
+    width:100%;
+    height:auto;
+    display:block;
+    object-fit:cover;
+    filter:brightness(0.92);
+    transition:0.6s ease;
+}
+
+.hero img:hover{
+    filter:brightness(1);
+    transform:scale(1.01);
+}
+
+/* SECTION */
+.choose-section{
+    padding:60px 20px 40px;
+    text-align:center;
+}
+
+.choose-section h2{
+    font-size:2.8rem;
+    margin-bottom:40px;
+    letter-spacing:1px;
+    font-weight:700;
+}
+
+/* EVENT BUTTONS */
+.event-buttons{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.event-btn{
+    border:none;
+    background:none;
+    cursor:pointer;
+    padding:0;
+    transition:0.3s ease;
+}
+
+.event-btn img{
+    width:340px;
+    border-radius:var(--radius);
+    box-shadow:0 12px 40px rgba(0,0,0,0.45);
+    transition:0.35s ease;
+}
+
+.event-btn:hover img{
+    transform:translateY(-8px) scale(1.03);
+    filter:brightness(1.1);
+}
+
+.event-btn.active img{
+    outline:3px solid var(--gold);
+    outline-offset:5px;
+}
+
+/* PANELS */
+.event-panel{
+    max-width:1100px;
+    margin:20px auto;
+    overflow:hidden;
+    max-height:0;
+    opacity:0;
+    transform:translateY(20px);
+    transition:all 0.4s ease;
+}
+
+.event-panel.active{
+    max-height:5000px;
+    opacity:1;
+    transform:translateY(0);
+}
+
+.panel-inner{
+    background:var(--panel);
+    backdrop-filter:blur(var(--blur));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:45px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+}
+
+/* FORM WRAPPER */
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* LABELS */
+form label strong {
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+}
+
+/* SELECT DROPDOWN */
+select {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.25s ease;
+    backdrop-filter: blur(var(--blur));
+}
+
+select:hover {
+    border-color: var(--gold);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.25);
+}
+
+/* DIVISIONS (ALL FORMS) */
+#divisions label,
+#divisions_rm label,
+#divisions_kids label,
+#divisions_rm_kids label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    transition: 0.25s ease;
+}
+
+#divisions label:hover,
+#divisions_rm label:hover,
+#divisions_kids label:hover,
+#divisions_rm_kids label:hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--gold);
+}
+
+/* Modern checkbox */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--gold);
+    cursor: pointer;
+}
+
+/* PAYPAL BUTTON */
+button[type="submit"] {
+    background: var(--gold) !important;
+    color: black !important;
+    padding: 16px 28px !important;
+    border-radius: var(--radius) !important;
+    font-size: 1.15rem !important;
+    font-weight: bold !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: 0.3s ease !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35) !important;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:30px 20px;
+    margin-top:30px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .choose-section h2{
+        font-size:2.2rem;
+    }
+
+    .event-btn img{
+        width:100%;
+    }
+
+    .panel-inner{
+        padding:28px;
+    }
+}
+
+.link-buttons{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.link-btn{
+    background:#ffcc00;
+    color:black;
+    padding:12px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    display:inline-block;
+    transition:0.25s ease;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+.link-btn:hover{
+    transform:translateY(-3px);
+    background:#ffd633;
+    box-shadow:0 14px 30px rgba(0,0,0,0.35);
+}
+
+.info-block{
+    background: rgba(14, 20, 40, 0.75);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(10px);
+    transition: 0.25s ease;
+}
+
+.info-block:hover{
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(212,175,55,0.4);
+    transform: translateY(-2px);
+}
+
+.info-block h2{
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.info-block p{
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.info-container{
+    max-width:1100px;
+    margin:20px auto;
+    padding:0 20px;
+}
+
+hr {
+  border: 0;
+  height: 3px;
+  background: #ffcc00;
+  border-radius: 3px;
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+    <img src="images/hero.jpg">
+</section>
+
+<section class="choose-section">
+    <h2>Choose Your Event</h2>
+
+    <div class="event-buttons">
+
+        <button class="event-btn" onclick="openEvent('colorado', this)">
+            <img src="images/26-superbody.jpg">
+        </button>
+
+        <button class="event-btn" onclick="openEvent('rocky', this)">
+            <img src="images/26-rocky-mountain.jpg">
+        </button>
+
+    </div>
+</section>
+
+<!-- ================= COLORADO ================= -->
+<div id="colorado" class="event-panel">
+<div class="panel-inner">
+
+<h1>Colorado Superbody</h1>
+<h2>August 1, 2026</h2>
+<h3>Hinkley Auditorium</h3>
+<p>1250 Chambers Rd, Aurora, CO 80013</p>
+<div style="text-align:center; margin:30px 0;">
+<iframe
+    width="100%"
+    height="350"
+    style="border:0; border-radius:10px;"
+    loading="lazy"
+    allowfullscreen
+    referrerpolicy="no-referrer-when-downgrade"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3067.676927651138!2d-104.809927!3d39.737657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c7f3f1f9a6e4f%3A0x6c9b1e0a3a4e3a7d!2sHinkley%20High%20School%20Auditorium!5e0!3m2!1sen!2sus!4v1720470000000">
+  </iframe>
+</div>
+
+<br>
+<hr>
+<br>
+
+<h1>COMPETITOR REGISTRATION</h1>
+<br>
+<a href="https://naturalbodybuilding.com/project/inba-pnba-pro-am-colorado-superbody-championships/"
+   target="_blank"
+   rel="noopener noreferrer"
+   style="
+      display:block;
+      width:100%;
+      background:#d4af37;
+      color:#000;
+      padding:16px 28px;
+      border-radius:16px;
+      font-size:1.15rem;
+      font-weight:bold;
+      text-align:center;
+      text-decoration:none;
+      cursor:pointer;
+      box-shadow:0 12px 30px rgba(0,0,0,0.35);
+      transition:0.3s ease;
+      box-sizing:border-box;
+   "
+   onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.45)'"
+   onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 12px 30px rgba(0,0,0,0.35)'">
+    Register Now
+</a>
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+<h1>PURCHASE YOUR TICKETS</h1> 
+
+<p>Saturday, August 1, 2026</p>
+<p>LIVE Judging & Awards Show
+10am - 4pm</p>
+
+<form action="https://www.paypal.com/cgi-bin/webscr"
+      method="post"
+      target="_blank"
+      style="text-align:center;">
+
+  <input type="hidden" name="cmd" value="_xclick">
+  <input type="hidden" name="business" value="Tiffany@Tiffanysfitness.com">
+  <input type="hidden" name="item_name" value="2026 Superbody Championships Ticket">
+
+  <!-- Option Name -->
+  <input type="hidden" name="on0" value="Seating Type">
+
+  <!-- This value changes automatically -->
+  <input type="hidden" name="amount" id="paypalAmount" value="35">
+
+  <select
+      name="os0"
+      id="seatSelect"
+      onchange="updatePrice()"
+      style="
+        padding:10px;
+        font-size:16px;
+        border-radius:6px;
+        width:100%;
+        max-width:500px;
+        margin-bottom:20px;
+      ">
+
+    <option value="GENERAL ADMISSION Reserved - $35"
+            data-price="35">
+      GENERAL ADMISSION Reserved - $35 (Rows 11+)
+    </option>
+
+    <option value="VIP SILVER Seating - $45"
+            data-price="45">
+      VIP SILVER Seating - $45 (Rows 6–10 behind Media)
+    </option>
+
+    <option value="VIP GOLD Seating - $55"
+            data-price="55">
+      VIP GOLD Seating - $55 (Rows 1–5 behind Judges & Media)
+    </option>
+
+    <option value="BACK STAGE PASS + VIP GOLD Seat - $100"
+            data-price="100">
+      BACK STAGE PASS + VIP GOLD Seat - $100
+    </option>
+
+  </select>
+
+  <button
+      type="submit"
+      style="
+        background:#ffcc00;
+        color:#000;
+        padding:14px 32px;
+        border:none;
+        border-radius:8px;
+        font-size:18px;
+        font-weight:bold;
+        cursor:pointer;
+      ">
+    Pay with PayPal
+  </button>
+
+</form>
+
+<script>
+function updatePrice() {
+    const select = document.getElementById("seatSelect");
+    const price = select.options[select.selectedIndex].dataset.price;
+    document.getElementById("paypalAmount").value = price;
+}
+
+// Initialize on page load
+updatePrice();
+</script>
+<br>
+<strong>* Coaches with at least 2 athletes registered get FREE Backstage Pass </strong>
+
+
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+</div>
+</div>
+
+<!-- ================= ROCKY ========================================= -->
+<div id="rocky" class="event-panel">
+<div class="panel-inner">
+
+<h1>Rocky Mountain Superbody Championships</h1>
+<h2>November 1, 2026</h2>
+<br>
+<hr>
+<br>
+<h1>COMPETITOR REGISTRATION</h1>
+<br>
+<a href="https://naturalbodybuilding.com/project/inba-pnba-pro-am-rocky-mountain-superbody-championships/"
+   target="_blank"
+   rel="noopener noreferrer"
+   style="
+      display:block;
+      width:100%;
+      background:#d4af37;
+      color:#000;
+      padding:16px 28px;
+      border-radius:16px;
+      font-size:1.15rem;
+      font-weight:bold;
+      text-align:center;
+      text-decoration:none;
+      cursor:pointer;
+      box-shadow:0 12px 30px rgba(0,0,0,0.35);
+      transition:0.3s ease;
+      box-sizing:border-box;
+   "
+   onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.45)'"
+   onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 12px 30px rgba(0,0,0,0.35)'">
+    Register Now
+</a>
+<br>
+<br>
+<hr>
+<br>
+<br>
+</div>
+</div>
+<!-- ================= INFO SECTION ================= -->
+<section class="event-info">
+
+<div class="info-container">
+
+  <div class="info-block">
+    <p>
+      Colorado Superbody™ shows in Denver are confirmed as qualifiers for Team USA and the Natural O️lympia ~ where Denny Kakos (founder and owner of INBA PNBA Global will be awarding up to $120,000 in Cash & Prizes to the PRO’s in 2026 (WADA lab tested). Last year $10,000 Cash was awarded to 1st place PNBA Pro Open divisions, the largest payout of any natural bodybuilding federation.
+    </p>
+  </div>
+
+  <div class="info-block">
+    <p>
+      Natural Olympia Judge, Lorenzo Gasper from California will be our Head Judge on August 1st and will offer athletes feedback right after Finals or at the After Party event (for athletes planning to compete at the Natural O️lympia in Las Vegas or in Denver at the November 1st Rocky Mountain Superbody Championships,
+    </p>
+  </div>
+
+  <div class="info-block">
+    <p>
+      * Media photographers and Iron Man Magazine are confirmed to attend our August 1st Pro qualifier show in Denver, Colorado.
+    </p>
+    <p>
+      * Top 5 Coaches - Teams awarded - stage recognition with Award presentation
+    </p>
+    <p>
+      * Top Coach - CASH PRIZE - $200 - Trainer who brings the most athletes (registered divisions + classes) + Award presentation for recognition on stage, website and on social media pages
+    </p>
+  </div>
+
+  <div class="info-block">
+    <p>
+     ️To find out more about the INBA PNBA Natural Olympia Divisions, click on the buttons below
+    </p>
+
+  <div class="link-buttons">
+
+  <a class="link-btn" href="https://naturalbodybuilding.com/categories/male-categories" target="_blank">
+    MEN DIVISIONS
+  </a>
+
+  <a class="link-btn" href="https://naturalbodybuilding.com/categories/female/" target="_blank">
+    LADIES DIVISIONS
+  </a>
+
+</div>
+  </div>
+<div class="info-block">
+<p>
+  <strong>AGE CLASSES:</strong><br><br>
+  Novice (Height classes if permitted), 
+  Teen (ages 13+), 
+  Collegiate (age 18-22), 
+  Open (age class 18+, Height classes if permitted), 
+  Jr. Masters (35-39 yrs), 
+  Masters (40-49 yrs), 
+  Grand Masters (50-59 yrs), 
+  Ultra Masters (60-69 yrs), 
+  Super Ultra Masters (70-79 yrs), 
+  Professional (Height classes if permitted)
+</p>
+
+
+  </div>
+<div class="info-block" style="text-align:center; padding:20px 0;">
+
+  <h2 style="margin-bottom:10px;">Colorado Posing Camp</h2>
+<h3 style="margin-bottom:10px;">Sunday, July 12, 2026</h3>
+  <p style="max-width:600px; margin:0 auto 20px;">
+ Learn mandatory poses, stage presence, transitions, and presentation with expert guidance.
+  </p>
+
+    <a href="https://tiffanysfitness.com/2026-colorado-posing-camp/"
+     target="_blank" 
+     rel="noopener"
+     style="
+       display:inline-block;
+       background:#ffcc00;
+       color:#000000;
+       padding:14px 32px;
+       border-radius:8px;
+       font-size:18px;
+       font-weight:bold;
+       text-decoration:none;
+     ">
+    REGISTER NOW
+  </a>
+
+</div>
+</div>
+
+</section>
+<section class="choose-section">
+
+    <div class="event-buttons">
+
+        <button class="event-btn" onclick="openEvent('colorado', this)">
+            <img src="images/26-superbody-1.png">
+        </button>
+
+        <button class="event-btn" onclick="openEvent('rocky', this)">
+            <img src="images/26-rocky-mountain-1.png">
+        </button>
+
+    </div>
+</section>
+
+  
+<footer>
+  <p>Follow us for updates, videos, posing tips, and show announcements:</p>
+
+  <p>
+    🔗 
+    <a href="https://instagram.com/coloradosuperbody" target="_blank" style="color:var(--gold); font-weight:bold;">
+      Instagram @coloradosuperbody
+    </a>
+    <br>
+    👍 
+    <a href="https://www.facebook.com/BODYStatement" target="_blank" style="color:var(--gold); font-weight:bold;">
+      Facebook @Fitness Colorado
+    </a>
+  </p>
+
+  <p>
+    ✉️ Questions?  
+    <a href="mailto:Tiffany@Tiffanysfitness.com" style="color:var(--gold); font-weight:bold;">
+       Tiffany@Tiffanysfitness.com
+    </a>
+  </p>
+<br>
+Colorado Superbody Championships
+</footer>
+
+<script>
+function openEvent(id, btn){
+    document.querySelectorAll('.event-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.event-btn').forEach(b => b.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById(id).classList.add('active');
+
+    setTimeout(() => {
+        document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    }, 400);
+}
+</script>
+
+</body>
+</html>
+</body>
+</html>
