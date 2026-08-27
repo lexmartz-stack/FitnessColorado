@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>2026 Colorado Superbody Championships</title>
+
 <style>
 
 :root{
@@ -320,28 +321,13 @@ hr {
     <img src="images/hero.jpg">
 </section>
 
-<section class="choose-section">
-    <h2>Choose Your Event</h2>
 
-    <div class="event-buttons">
+<!-- ================= ROCKY ========================================= -->
 
-        <button class="event-btn" onclick="openEvent('colorado', this)">
-            <img src="images/26-superbody.jpg">
-        </button>
-
-        <button class="event-btn" onclick="openEvent('rocky', this)">
-            <img src="images/26-rocky-mountain.jpg">
-        </button>
-
-    </div>
-</section>
-
-<!-- ================= COLORADO ================= -->
-<div id="colorado" class="event-panel">
 <div class="panel-inner">
 
-<h1>Colorado Superbody</h1>
-<h2>August 1, 2026</h2>
+<h1>Rocky Mountain Superbody Championships</h1>
+<h2>November 1, 2026</h2>
 <h3>Hinkley Auditorium</h3>
 <p>1250 Chambers Rd, Aurora, CO 80013</p>
 <div style="text-align:center; margin:30px 0;">
@@ -360,31 +346,233 @@ hr {
 <hr>
 <br>
 
-<h1>COMPETITOR REGISTRATION</h1>
+<h1>Competition Registration</h1>
 <br>
-<a href="https://naturalbodybuilding.com/project/inba-pnba-pro-am-colorado-superbody-championships/"
-   target="_blank"
-   rel="noopener noreferrer"
-   style="
-      display:block;
-      width:100%;
-      background:#d4af37;
-      color:#000;
-      padding:16px 28px;
-      border-radius:16px;
-      font-size:1.15rem;
-      font-weight:bold;
-      text-align:center;
-      text-decoration:none;
-      cursor:pointer;
-      box-shadow:0 12px 30px rgba(0,0,0,0.35);
-      transition:0.3s ease;
-      box-sizing:border-box;
-   "
-   onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.45)'"
-   onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 12px 30px rgba(0,0,0,0.35)'">
-    Register Now
-</a>
+<p><strong>Up to 50% savings on registration - Ends July 4 at midnight:</strong><br>
+$100 entry per division (reg. $150)<br>
+$150 for 2 divisions ($75 each)<br>
+$225 for 3 divisions ($75 each)
+</p>
+<br>
+
+<form id="payForm_rm" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+  <!-- PAYPAL REQUIRED FIELDS -->
+  <input type="hidden" name="cmd" value="_xclick">
+  <input type="hidden" name="business" value="Tiffany@Tiffanysfitness.com">
+  <input type="hidden" name="currency_code" value="USD">
+
+  <input type="hidden" name="item_name" id="item_name_rm">
+  <input type="hidden" name="amount" id="amount_rm">
+
+  <label><strong>Select Registration Type:</strong></label>
+
+  <select id="pricing_rm" onchange="RockyMountain.updatePrice()">
+    <option value="1" selected>1 Division - $100</option>
+    <option value="2">2 Divisions - $150</option>
+    <option value="3">3 Divisions - $225</option>
+  </select>
+
+  <label><strong>Select Division(s):</strong></label>
+
+  <div id="divisions_rm">
+    <label><input type="checkbox" value="Transformation Body Quest"> Transformation Body Quest</label>
+    <label><input type="checkbox" value="Bodybuilding"> Bodybuilding</label>
+    <label><input type="checkbox" value="Men’s Classic Physique"> Men’s Classic Physique</label>
+    <label><input type="checkbox" value="Physique"> Physique</label>
+    <label><input type="checkbox" value="Bikini"> Bikini</label>
+    <label><input type="checkbox" value="Figure"> Figure</label>
+    <label><input type="checkbox" value="Wellness"> Wellness</label>
+    <label><input type="checkbox" value="Athletic"> Athletic</label>
+    <label><input type="checkbox" value="Sports Model"> Sports Model</label>
+    <label><input type="checkbox" value="Angel Wings"> Angel Wings</label>
+    <label><input type="checkbox" value="Evening Gown"> Evening Gown</label>
+    <label><input type="checkbox" value="Fitness Routine"> Fitness Routine</label>
+    <label><input type="checkbox" value="Ink/Tattoo"> Ink/Tattoo</label>
+    <label><input type="checkbox" value="Mixed Pairs"> Mixed Pairs</label>
+    <label><input type="checkbox" value="Physically challenged"> Physically challenged</label>
+    <label><input type="checkbox" value="Figure Classic"> Figure Classic (one-piece)</label>
+    <label><input type="checkbox" value="Men’s Beach body"> Men’s Beach body (board shorts)</label>
+    <label><input type="checkbox" value="Men’s Sports Model"> Men’s Sports Model (speedo or square cut swimsuit)</label>
+    <label><input type="checkbox" value="Women Swimsuit Model"> Women’s Swimsuit Model (one-piece)</label>
+    <label><input type="checkbox" value="Battling Against Cancer"> Battling Against Cancer</label>
+    <label><input type="checkbox" value="Undecided"> Undecided</label>
+</div>
+
+
+<button type="submit" onclick="return RockyMountain.validateForm()" style="
+  background:#FFCC00;
+  color:black;
+  padding:12px 20px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+">
+  Pay with PayPal
+</button>
+
+</form>
+<br>
+<p><strong>* All sales are final. No refunds.</strong></p>
+
+<script>
+const RockyMountain = {
+
+  showName: "2026 Rocky Mountain Championships",
+
+  updatePrice() {
+    const pricing = document.getElementById("pricing_rm").value;
+
+    const prices = {
+      "1": { amount: 100, label: "1 Division Entry" },
+      "2": { amount: 150, label: "2 Division Entry" },
+      "3": { amount: 225, label: "3 Division Entry" }
+    };
+
+    document.getElementById("amount_rm").value = prices[pricing].amount;
+    document.getElementById("item_name_rm").value = prices[pricing].label;
+  },
+
+  validateForm() {
+    this.updatePrice();
+
+    const pricing = document.getElementById("pricing_rm").value;
+    const checked = document.querySelectorAll("#divisions_rm input:checked").length;
+
+    if (checked !== Number(pricing)) {
+      alert("You must select exactly " + pricing + " division(s) for this registration.");
+      return false;
+    }
+
+    let divisions = [];
+    document.querySelectorAll("#divisions_rm input:checked").forEach(cb => {
+      divisions.push(cb.value);
+    });
+
+    document.getElementById("item_name_rm").value =
+      this.showName + " – " +
+      document.getElementById("item_name_rm").value +
+      " | " + divisions.join(", ");
+
+    return true;
+  }
+};
+
+// Set default price on load
+RockyMountain.updatePrice();
+</script>
+
+<p>
+  *️After your entry fee is paid and confirmed, you can begin completing your competitor bio for the emcee to read during your individual stage presentation at 
+  <a href="http://naturalbodybuilding.com/profile" target="_blank" style="color:var(--gold); font-weight:bold;">
+    naturalbodybuilding.com/profile
+  </a></p>
+  <br>
+<p>  Note: you can include your hobbies, interests, reason you decided to compete, fitness goals, gym or sponsor information and any previous titles you hold.
+</p>
+<br>
+<p><strong>ENTRY FEE & DEADLINES:
+
+Prior to competing August 1, 2026 you must have your INBA membership $100 (good through June 2027) and pay the drug fee testing fee $75.</strong></p>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<h1>Kids & Teen Fitness Registration</h1>
+<p><strong>Discounted pricing ends July 4 at midnight:</strong><br>
+$50 entry per division (reg. $80)<br>
+$100 for 2 divisions
+</p>
+<br>
+
+<form id="payForm_rm_kids" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+  <!-- PAYPAL REQUIRED FIELDS -->
+  <input type="hidden" name="cmd" value="_xclick">
+  <input type="hidden" name="business" value="Tiffany@Tiffanysfitness.com">
+  <input type="hidden" name="currency_code" value="USD">
+
+  <input type="hidden" name="item_name" id="item_name_rm_kids">
+  <input type="hidden" name="amount" id="amount_rm_kids">
+
+  <label><strong>Select Registration Type:</strong></label>
+
+  <select id="pricing_rm_kids" onchange="RockyKidsTeen.updatePrice()">
+    <option value="1" selected>1 Division - $50</option>
+    <option value="2">2 Divisions - $100</option>
+  </select>
+
+  <label><strong>Select Division(s):</strong></label>
+
+  <div id="divisions_rm_kids">
+    <label><input type="checkbox" value="Fitness Teen (ages 13-18)"> Fitness Teen (ages 13-18)</label>
+    <label><input type="checkbox" value="Fitness Girls (age 6-12)"> Fitness Girls (age 6-12)</label>
+    <label><input type="checkbox" value="Fitness Boys (age 6-12)"> Fitness Boys (age 6-12)</label>
+    <label><input type="checkbox" value="Model Kids (age 6-12)"> Model Kids (age 6-12)</label>
+    <label><input type="checkbox" value="Model Teen (age 13-18)"> Model Teen (age 13-18)</label>
+  </div>
+
+  <button type="submit" onclick="return RockyKidsTeen.validateForm()" style="
+    background:var(--gold);
+    color:black;
+    padding:12px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+  ">
+    Pay with PayPal
+  </button>
+
+</form>
+<br>
+<p><strong>* All sales are final. No refunds.</strong></p>
+
+<script>
+const RockyKidsTeen = {
+
+  showName: "2026 Rocky Mountain Championships - Kids & Teen Fitness",
+
+  updatePrice() {
+    const pricing = document.getElementById("pricing_rm_kids").value;
+
+    const prices = {
+      "1": { amount: 50, label: "1 Division Entry" },
+      "2": { amount: 100, label: "2 Division Entry" }
+    };
+
+    document.getElementById("amount_rm_kids").value = prices[pricing].amount;
+    document.getElementById("item_name_rm_kids").value = prices[pricing].label;
+  },
+
+  validateForm() {
+    this.updatePrice();
+
+    const pricing = document.getElementById("pricing_rm_kids").value;
+    const checked = document.querySelectorAll("#divisions_rm_kids input:checked").length;
+
+    if (checked !== Number(pricing)) {
+      alert("You must select exactly " + pricing + " division(s) for this registration.");
+      return false;
+    }
+
+    let divisions = [];
+    document.querySelectorAll("#divisions_rm_kids input:checked").forEach(cb => {
+      divisions.push(cb.value);
+    });
+
+    document.getElementById("item_name_rm_kids").value =
+      this.showName + " – " +
+      document.getElementById("item_name_rm_kids").value +
+      " | " + divisions.join(", ");
+
+    return true;
+  }
+};
+
+// Set default price on load
+RockyKidsTeen.updatePrice();
+</script>
 <br>
 <br>
 <hr>
@@ -477,57 +665,12 @@ updatePrice();
 <br>
 <strong>* Coaches with at least 2 athletes registered get FREE Backstage Pass </strong>
 
-
-<br>
-<br>
-<br>
-<hr>
-<br>
-<br>
-
-
-</div>
-</div>
-
-<!-- ================= ROCKY ========================================= -->
-<div id="rocky" class="event-panel">
-<div class="panel-inner">
-
-<h1>Rocky Mountain Superbody Championships</h1>
-<h2>November 1, 2026</h2>
-<br>
-<hr>
-<br>
-<h1>COMPETITOR REGISTRATION</h1>
-<br>
-<a href="https://naturalbodybuilding.com/project/inba-pnba-pro-am-rocky-mountain-superbody-championships/"
-   target="_blank"
-   rel="noopener noreferrer"
-   style="
-      display:block;
-      width:100%;
-      background:#d4af37;
-      color:#000;
-      padding:16px 28px;
-      border-radius:16px;
-      font-size:1.15rem;
-      font-weight:bold;
-      text-align:center;
-      text-decoration:none;
-      cursor:pointer;
-      box-shadow:0 12px 30px rgba(0,0,0,0.35);
-      transition:0.3s ease;
-      box-sizing:border-box;
-   "
-   onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.45)'"
-   onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 12px 30px rgba(0,0,0,0.35)'">
-    Register Now
-</a>
 <br>
 <br>
 <hr>
 <br>
 <br>
+
 </div>
 </div>
 <!-- ================= INFO SECTION ================= -->
@@ -625,11 +768,7 @@ updatePrice();
 
     <div class="event-buttons">
 
-        <button class="event-btn" onclick="openEvent('colorado', this)">
-            <img src="images/26-superbody-1.png">
-        </button>
-
-        <button class="event-btn" onclick="openEvent('rocky', this)">
+        <button class="event-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
             <img src="images/26-rocky-mountain-1.png">
         </button>
 
@@ -655,7 +794,7 @@ updatePrice();
   <p>
     ✉️ Questions?  
     <a href="mailto:Tiffany@Tiffanysfitness.com" style="color:var(--gold); font-weight:bold;">
-       Tiffany@Tiffanysfitness.com
+      Tiffany@Tiffanysfitness.com
     </a>
   </p>
 <br>
